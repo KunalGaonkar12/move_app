@@ -16,6 +16,9 @@ class WatchScreen extends StatefulWidget {
 }
 
 class _WatchScreenState extends State<WatchScreen> {
+  bool searchClicked=false;
+  TextEditingController _controller = TextEditingController();
+  bool _isSearching = false;
 
   @override
   void initState() {
@@ -28,7 +31,7 @@ class _WatchScreenState extends State<WatchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget appBar = Container(
+    Widget appBar = !searchClicked?Container(
       decoration: const BoxDecoration(color: Colors.white, boxShadow: [
         BoxShadow(
           color: Color(0xffE5E9EC),
@@ -53,14 +56,53 @@ class _WatchScreenState extends State<WatchScreen> {
           IconButton(
               padding: EdgeInsets.only(right: 4),
               iconSize: 18,
-              onPressed: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => Container())),
+              onPressed: () {
+
+                searchClicked=!searchClicked;
+                _isSearching=!_isSearching;
+                setState(() {
+
+                });
+              },
               icon: Image.asset(
                 "assets/icons/Search.png",
                 color: Color(0xff202C43),
               )),
         ],
       ),
+    ):
+    TextField(
+      controller: _controller,
+      decoration: InputDecoration(
+        hintText: 'TV shows, movies and more',
+        hintStyle: TextStyle(
+
+        ),
+        contentPadding: EdgeInsets.all(12),
+        filled: true,
+        fillColor: Colors.grey[200],
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        prefixIcon: Icon(Icons.search),
+        suffixIcon: _isSearching
+            ? IconButton(
+          icon: Icon(Icons.clear,color: Colors.black),
+          onPressed: () {
+            setState(() {
+              _controller.clear();
+              _isSearching = false;
+              searchClicked=!searchClicked;
+            });
+          },
+        )
+            : null,
+      ),
+      onChanged: (value) {
+        setState(() {
+          _isSearching = value.isNotEmpty;
+        });
+      },
     );
 
     return Consumer<WatchScreenProvider>(
