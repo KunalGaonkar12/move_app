@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../common/constants/palette.dart';
 
@@ -22,19 +23,23 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
   @override
   void initState() {
     widget.controller.addListener(() {
-      if (widget.controller.indexIsChanging) {
-        setState(() {});
-      }
+      print(" WatchScreen Current Index ${ widget.controller.index}");
+        int currentIndex=widget.controller.index;
+      _currentIndex=currentIndex;
+      widget.controller.animateTo(currentIndex);
+      setState(() {});
     });
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
     List<Widget> homeScreenItems = [
       bottomBarItem(
           label: "Dashboard",
-          imagePath: "assets/icons/Group 19625113.png",
+          imagePath: "assets/icons/dashboard_icon.svg",
           dimention: 16,
           iconSpacer: 9,
           textColor: _currentIndex == 0 ? selectedColor : unselectedColor,
@@ -42,7 +47,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           animationIndex: 0),
       bottomBarItem(
           label: "Watch",
-          imagePath: "assets/icons/Vector.png",
+          imagePath: "assets/icons/play_button_icon.svg",
           dimention: 18,
           iconSpacer: 9,
           textColor: _currentIndex == 1 ? selectedColor : unselectedColor,
@@ -50,7 +55,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           animationIndex: 1),
       bottomBarItem(
           label: "Media Library",
-          imagePath: "assets/icons/Group 19625112.png",
+          imagePath: "assets/icons/folder_icon.svg",
           dimention: 18,
           iconSpacer: 9,
           textColor: _currentIndex == 2 ? selectedColor : unselectedColor,
@@ -58,7 +63,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           animationIndex: 2),
       bottomBarItem(
           label: "More",
-          imagePath: "assets/icons/List.png",
+          imagePath: "assets/icons/List.svg",
           dimention: 24,
           iconSpacer: 4,
           textColor: _currentIndex == 3 ? selectedColor : unselectedColor,
@@ -70,8 +75,8 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       height: 75,
       child: ClipRRect(
         borderRadius:
-            // const BorderRadius.only(topRight: Radius.circular(27), topLeft: Radius.circular(27)),
-            BorderRadius.circular(27),
+            const BorderRadius.only(topRight: Radius.circular(27), topLeft: Radius.circular(27)),
+            // BorderRadius.circular(27),
         child: BottomAppBar(
           color: Palette.primary,
           height: 75,
@@ -109,11 +114,9 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       child: SizedBox(
         child: Column(
           children: [
-            Image.asset(
-              imagePath,
-              height: dimention,
-              width: dimention,
-              color: textColor,
+            SvgPicture.asset(
+                imagePath,
+              color: textColor,width: dimention,height: dimention,
             ),
             SizedBox(
               height: iconSpacer,

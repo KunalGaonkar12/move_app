@@ -38,237 +38,239 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         },
         child: Scaffold(
           backgroundColor: Palette.backgroundColor,
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                  flex: 3,
-                  child: Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
+          body: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    flex: 3,
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment(0.00, 1.00),
+                                end: Alignment(0, -1),
+                                colors: [
+                                  Colors.black,
+                                  Colors.black.withOpacity(0)
+                                ],
+                              ),
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      "${ApiEndPoint.imageBaseUrl}${movieDetailProvider.selectedImage.posters![0].filePath}"),
+                                  fit: BoxFit.cover)),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
                             gradient: LinearGradient(
                               begin: Alignment(0.00, 1.00),
                               end: Alignment(0, -1),
-                              colors: [
-                                Colors.black,
-                                Colors.black.withOpacity(0)
-                              ],
+                              colors: [Colors.black, Colors.black.withOpacity(0)],
                             ),
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    "${ApiEndPoint.imageBaseUrl}${movieDetailProvider.selectedImage.posters![0].filePath}"),
-                                fit: BoxFit.cover)),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment(0.00, 1.00),
-                            end: Alignment(0, -1),
-                            colors: [Colors.black, Colors.black.withOpacity(0)],
                           ),
                         ),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          _customAppBar(context),
-                          SizedBox(height: 144),
-                          CachedNetworkImage(
-                            imageUrl:
-                                "${ApiEndPoint.imageBaseUrl}${movieDetailProvider.selectedImage.logos![0].filePath}",
-                            fit: BoxFit.contain,
-                            height: 30,
-                            width: 102,
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            "In Theaters ${movieDetailProvider.getMonthFromInt(movieDetailProvider.month)} ${movieDetailProvider.date},${movieDetailProvider.year} ",
-                            style: const  TextStyle(
-                                fontSize: 16,
-                                fontFamily: "Poppins",
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          const SizedBox(height: 15),
-                          GestureDetector(
-                            onTap: () {
-                              print("Book Tickets");
-                            },
-                            child: Container(
-                              width: 243,
-                              height: 50,
-                              decoration: ShapeDecoration(
-                                color: Color(0xFF61C3F2),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'Get Tickets',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w600,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            _customAppBar(context),
+                            SizedBox(height:70),
+                            CachedNetworkImage(
+                              imageUrl:
+                                  "${ApiEndPoint.imageBaseUrl}${movieDetailProvider.selectedImage.logos![0].filePath}",
+                              fit: BoxFit.contain,
+                              height: 30,
+                              width: 102,
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              "In Theaters ${movieDetailProvider.getMonthFromInt(movieDetailProvider.month)} ${movieDetailProvider.date},${movieDetailProvider.year} ",
+                              style: const  TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: "Poppins",
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            const SizedBox(height: 15),
+                            GestureDetector(
+                              onTap: () {
+                                print("Book Tickets");
+                              },
+                              child: Container(
+                                width: 243,
+                                height: 50,
+                                decoration: ShapeDecoration(
+                                  color: Color(0xFF61C3F2),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 15),
-                          GestureDetector(
-                            onTap: () {
-                              print("Watch Trailer Clicked");
-                              print("${ApiEndPoint.youtubeUrl}${movieDetailProvider.selectedMovieVideo.results![0].key}");
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (_) => YouTubePlayerScreen(
-                                  videoUrl:"${ApiEndPoint.youtubeUrl}${movieDetailProvider.selectedMovieVideo.results![0].key}")
-                              ));
-                            },
-                            child: Container(
-                              width: 243,
-                              height: 50,
-                              decoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
-                                      width: 1, color: Color(0xFF61C3F2)),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.play_arrow,
-                                      color: Colors.white, size: 18),
-                                  Text(
-                                    'Watch Trailer',
+                                child: const Center(
+                                  child: Text(
+                                    'Get Tickets',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w600,
                                     ),
-                                  )
-                                ],
+                                  ),
+                                ),
                               ),
                             ),
-                          ), // Container(
-                          //
-                          // )
-                        ],
-                      ),
-                    ],
-                  )),
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                       const  SizedBox(
-                          height: 27,
-                        ),
-                        const  Text(
-                          'Genres',
-                          style: TextStyle(
-                            color: Color(0xFF202C43),
-                            fontSize: 16,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 14,
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                              children: movieDetailProvider
-                                  .selectedMovieDetails.genres!
-                                  .map(
-                                    (e) => Container(
-                                      // width: 60,
-                                      // height: 24,
-                                      margin: EdgeInsets.only(right: 5),
-                                      decoration: ShapeDecoration(
-                                        color: movieDetailProvider
-                                            .getRandomColor(),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                        ),
+                            const SizedBox(height: 15),
+                            GestureDetector(
+                              onTap: () {
+                                print("Watch Trailer Clicked");
+                                print("${ApiEndPoint.youtubeUrl}${movieDetailProvider.selectedMovieVideo.results![0].key}");
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (_) => YouTubePlayerScreen(
+                                    videoUrl:"${ApiEndPoint.youtubeUrl}${movieDetailProvider.selectedMovieVideo.results![0].key}")
+                                ));
+                              },
+                              child: Container(
+                                width: 243,
+                                height: 50,
+                                decoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                        width: 1, color: Color(0xFF61C3F2)),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.play_arrow,
+                                        color: Colors.white, size: 18),
+                                    Text(
+                                      'Watch Trailer',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                      child: Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 4, horizontal: 10),
-                                          child: Text(
-                                            e.name ?? "",
-                                            softWrap: true,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w600,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),SizedBox(height:10,) // Container(
+                            //
+                            // )
+                          ],
+                        ),
+                      ],
+                    )),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                         const  SizedBox(
+                            height: 27,
+                          ),
+                          const  Text(
+                            'Genres',
+                            style: TextStyle(
+                              color: Color(0xFF202C43),
+                              fontSize: 16,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 14,
+                          ),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                                children: movieDetailProvider
+                                    .selectedMovieDetails.genres!
+                                    .map(
+                                      (e) => Container(
+                                        // width: 60,
+                                        // height: 24,
+                                        margin: EdgeInsets.only(right: 5),
+                                        decoration: ShapeDecoration(
+                                          color: movieDetailProvider
+                                              .getRandomColor(),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4, horizontal: 10),
+                                            child: Text(
+                                              e.name ?? "",
+                                              softWrap: true,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                  .toList()),
-                        ),
-                      const  SizedBox(
-                          height: 39,
-                        ),
-                       const Text(
-                          'Overview',
-                          style: TextStyle(
-                            color: Color(0xFF202C43),
-                            fontSize: 16,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
-                            height: 0.08,
+                                    )
+                                    .toList()),
                           ),
-                        ),
-                       const SizedBox(
-                          height: 14,
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Text(
-                                movieDetailProvider
-                                        .selectedMovieDetails.overview ??
-                                    "",
-                                style:const TextStyle(
-                                  color: Color(0xFF8F8F8F),
-                                  fontSize: 12,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.6,
+                        const  SizedBox(
+                            height: 39,
+                          ),
+                         const Text(
+                            'Overview',
+                            style: TextStyle(
+                              color: Color(0xFF202C43),
+                              fontSize: 16,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                              height: 0.08,
+                            ),
+                          ),
+                         const SizedBox(
+                            height: 14,
+                          ),
+                          Expanded(
+                            child: Container(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Text(
+                                  movieDetailProvider
+                                          .selectedMovieDetails.overview ??
+                                      "",
+                                  style:const TextStyle(
+                                    color: Color(0xFF8F8F8F),
+                                    fontSize: 12,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.6,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                       const  SizedBox(
-                          height: 40,
-                        )
-                      ],
+                         const  SizedBox(
+                            height: 40,
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       );

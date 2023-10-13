@@ -1,8 +1,11 @@
 
-import 'dart:convert';
+
+import 'package:floor/floor.dart';
 
 List<Movie> movieFromJson(List data) =>data.map((element) => Movie.fromJson(element)).toList();
 
+
+// @Entity(tableName: "Movie",primaryKeys: [''])
 class Movie {
   late bool adult;
   late String backdropPath;

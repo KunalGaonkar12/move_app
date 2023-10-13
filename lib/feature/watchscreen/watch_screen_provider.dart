@@ -12,7 +12,7 @@ class WatchScreenProvider extends ChangeNotifier{
   List<Movie> upcomingMovies=[];
 
   void init() async {
-    upcomingMovies=[];
+    // upcomingMovies=[];
     await fetchMovies();
 
   }
@@ -20,22 +20,27 @@ class WatchScreenProvider extends ChangeNotifier{
 
   Future<List<Movie>> fetchMovies() async {
 
-    try {
-      final response= await ApiService.get(ApiEndPoint.movieUrl);
-      if(response!=null){
-        Map<String, dynamic> data = response.data;
-        List results = data['results'];
-        upcomingMovies=movieFromJson(results);
-        notifyListeners();
-        // results.forEach((element) {upcomingMovies.add(Movie.fromJson(element));});
-        print(upcomingMovies);
-        return upcomingMovies;
-      }else{
-        return upcomingMovies;
+    if(upcomingMovies.isEmpty){
+      try {
+        final response= await ApiService.get(ApiEndPoint.movieUrl);
+        if(response!=null){
+          Map<String, dynamic> data = response.data;
+          List results = data['results'];
+          upcomingMovies=movieFromJson(results);
+          notifyListeners();
+          // results.forEach((element) {upcomingMovies.add(Movie.fromJson(element));});
+          print(upcomingMovies);
+          return upcomingMovies;
+        }else{
+          return upcomingMovies;
+        }
+      } catch (e) {
+        throw Exception('Failed to load movies: $e');
       }
-    } catch (e) {
-      throw Exception('Failed to load movies: $e');
+    }else{
+      return upcomingMovies;
     }
+
   }
 
 
